@@ -1,0 +1,11 @@
+= content_for(:header){t('users')}
+%table.table.table-bordered{id: "users_index_table"}
+	%th{style: "width: 40px;"}= t('user.id')
+	%th= t('user.name')
+	%th= t('user.last_name')
+	%th{style: "width: 50px;"}= t('user.avatar')
+	%th{style: "width: 100px"}
+		= link_to new_user_path, class: "btn btn-primary btn-sm", data: {remote: "true", disable_with: t('adding')} do
+			= fa_icon "plus", text: t('add')
+	- @users.each do |user|
+		= render partial: "index_table_row", locals: {user: user}

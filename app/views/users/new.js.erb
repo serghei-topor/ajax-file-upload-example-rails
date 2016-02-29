@@ -1,0 +1,6 @@
+<% modal = render partial: 'form_dialog', locals:{user: @user} %>
+
+$('body').remove('.user-modal-dialog').append('<%= escape_javascript(modal) %>');
+$('.user-modal-dialog').modal({show: true}).on('hidden.bs.modal', function(e){
+		$(this).remove()
+})

@@ -1,0 +1,22 @@
+!!!
+%html
+  %head
+    %title= t('app_title')
+    = stylesheet_link_tag 'application'
+  %body
+    %nav{class: "navbar navbar-inverse navbar-static-top"}
+      .container
+        .navbar-header
+          %button{class: 'navbar-toggle collapsed', data: {toggle: 'collapse', target: '#main_navbar'}}
+            %span.sr-only (toggle)
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          = link_to root_path, class: 'navbar-brand' do
+            = image_tag ''
+            %span= t('app_title')
+        .navbar-collapse{class: 'collapse', id: 'main_navbar'}
+    .container
+      %h1= yield :header
+      = yield
+  = javascript_include_tag 'application'

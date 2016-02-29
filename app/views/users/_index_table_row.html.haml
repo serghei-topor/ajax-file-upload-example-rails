@@ -1,0 +1,13 @@
+%tr{id: dom_id(user)}
+	%td= user.id
+	%td= user.name
+	%td= user.last_name
+	%td= image_tag(user.avatar.url(:thumb)) unless user.avatar.blank?
+	%td
+		.btn-group
+			= link_to edit_user_path(user), class: "btn btn-default btn-sm", data: {remote: true}, title: t("edit") do
+				= fa_icon "pencil"
+			= link_to user_path(user, authenticity_token: form_authenticity_token),
+			method: 'delete', class: "btn btn-default btn-sm",
+			data: {remote: true, confirm: t('delete_confirm')}, title: t("delete") do
+				= fa_icon "trash-o", class: " text-danger"

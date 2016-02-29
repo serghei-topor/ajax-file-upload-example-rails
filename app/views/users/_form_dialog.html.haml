@@ -1,0 +1,32 @@
+.modal{class: 'modal-wide fade user-modal-dialog', id: dom_id(user, 'modal_dialog')}
+  .modal-dialog
+    .modal-content
+      = form_for user, authenticity_token: true, :multipart => true do |f|
+        .modal-header
+          %button{type: 'button', class: 'close', data: {dismiss: 'modal'}, 'area-label' => 'Close'}
+            %span{'area-hidden' => true} &times;
+          %h4{class: 'modal-title'}
+            = t(user.new_record? ? 'new' : 'edit')
+            = t('user_entity')
+            -unless user.new_record?
+              &#35;
+              = user.id
+        .modal-body
+          - %w(name last_name).each do |field|
+            .form-group
+              = f.label field, t("user.#{field}")
+              = f.text_field field, class: "form-control"
+          .form-group
+            = f.label :avatar, t("user.avatar")
+            = f.file_field :avatar, accept: 'image/png,image/gif,image/jpeg'
+            %p{class: 'help-block'}= t('avatar_accepted_formats')
+            - unless user.avatar.blank?
+              .form-group
+                = label_tag nil, t('current_avatar')
+                %div= image_tag user.avatar.url, class: 'img-responsive', style: 'height: 160px; width: 240px;'
+        .modal-footer
+          %button{type: 'button', class: 'btn btn-default', data: {dismiss: 'modal'}}= t('close')
+          = f.submit t(user.new_record? ? 'add' : 'update'),
+          class: 'btn btn-primary', data: {disable_with: t(user.new_record? ? 'adding' : 'updating')}
+:javascript
+  $("##{dom_id(user, 'modal_dialog')} form").ajaxForm()
